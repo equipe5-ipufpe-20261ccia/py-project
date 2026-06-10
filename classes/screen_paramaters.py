@@ -5,4 +5,4 @@ class ScreenParameters:
         self.x = screen_x
         self.y = screen_y
     def get_screen_width(self):
-        return (self.y , self.x)
+        return (self.x , self.y)

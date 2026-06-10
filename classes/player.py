@@ -1,13 +1,17 @@
 import pygame
 from classes.screen_paramaters import ScreenParameters
+from utils.helpers import Helpers
+from classes.text import Text
 
 class Player:
     def __init__(self):
+
         #declarando as imagens do jogador
-        self.image_left = pygame.image.load("assets/images/Low_tier_god.jpg")
-        self.image_right = pygame.image.load("assets/images/Low_tier_god2.jpg")
-        self.image_high = pygame.image.load("assets/images/Low_tier_god3.jpg")
-        self.image_down = pygame.image.load("assets/images/Low_tier_god4.jfif")
+        self.image_left = Helpers("assets/images/Low_tier_god.jpg" , 100 , 100).get_proporsion()
+        self.image_right = Helpers("assets/images/Low_tier_god2.jpg" , 100 , 100).get_proporsion()
+        self.image_high = Helpers("assets/images/Low_tier_god3.jpg" , 100 , 100).get_proporsion()
+        self.image_down = Helpers("assets/images/Low_tier_god4.jfif" , 100 , 100).get_proporsion()
+
         #declarando a posição inicial e o tamanho do retangulo
 
         self.image_present = self.image_left
@@ -15,9 +19,14 @@ class Player:
         self.rect.x = 200
         self.rect.y = 200
         self.speed = 5
+
+        #status do personagem
+
+        self.vida = 100
+
     def get_position(self):
         return (self.rect.x, self.rect.y)
-    def movement(self):
+    def movement(self , screen):
 
         # verifica se a tecla esta sendo pressionada
         # O comando .get_pressed() , verifica se a tecla esta precionada
@@ -38,7 +47,7 @@ class Player:
 
         if key[pygame.K_UP]:
             mov_y = -1
-            self.image_present = self.image_down
+            self.image_present = self.image_high
 
         if key[pygame.K_DOWN]:
             mov_y = 1
@@ -58,16 +67,16 @@ class Player:
         if self.rect.left < 0:
             self.rect.left = 0
 
-        if self.rect.right > 800:
-            self.rect.right = 800
+        if self.rect.right > screen.x:
+            self.rect.right = screen.x
 
         if self.rect.top < 0:
             self.rect.top = 0
 
-        if self.rect.bottom > 600:
-            self.rect.bottom = 600
-    def update(self):
-        self.movement()
+        if self.rect.bottom > screen.y:
+            self.rect.bottom = screen.y
+    def update(self , screen):
+        self.movement(screen)
     def draw(self , screen):
         screen.blit(self.image_present, self.rect)
 
