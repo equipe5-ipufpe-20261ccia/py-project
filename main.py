@@ -6,6 +6,7 @@ from utils.collision import check_collision
 from classes.screen_paramaters import ScreenParameters
 from classes.player import Player
 from classes.enemy import Enemy
+from classes.boss import Boss
 
 def main():
     pygame.init()
@@ -24,6 +25,7 @@ def main():
 
     player = Player()
     enemy = Enemy()
+    boss = Boss(config_screen.get_screen_width()[0])
 
     running = True
 
@@ -37,6 +39,7 @@ def main():
                 running = False
         player.update(config_screen)
         enemy.update(player)
+        boss.draw(screen)
         enemy.draw(screen , player)
         player.draw(screen)
 
