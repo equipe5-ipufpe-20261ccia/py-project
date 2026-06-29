@@ -1,6 +1,4 @@
-
-WINDOW_TITLE = "Python Game Template"
-
+# Kinda useless but it's useful to have parameters
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 BLUE = (50, 120, 255)
@@ -8,17 +6,8 @@ RED = (220, 50, 50)
 YELLOW = (255, 255, 0)
 PINK = (255, 197, 211)
 
-IMAGES_PATH = "assets/images"
-SOUNDS_PATH = "assets/sounds"
-MUSIC_PATH = "assets/music"
-
-PLAYER_WIDTH = 50
-PLAYER_HEIGHT = 50
-PLAYER_SPEED = 5
-
-ENEMY_WIDTH = 50
-ENEMY_HEIGHT = 50
-ENEMY_SPEED = 3
+SCREEN_X = 800
+SCREEN_Y = 800
 
 FONT_STYLE = "Arial"
 FONT_SIZE = 20

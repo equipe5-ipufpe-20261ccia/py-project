@@ -1,5 +1,7 @@
 import pygame
 
+
+# Gets an image and makes it usable in game, with proportions corrected
 class Helpers:
     def __init__(self , ima , x , y):
         self.image = pygame.image.load(ima)

@@ -2,7 +2,9 @@ import pygame
 
 from constants import FONT_SIZE, FONT_STYLE, WHITE
 
-class Text:
+
+# Used in the making of Menu and Hud
+class Text():
     def __init__(self, x, y):
         self.x = x
         self.y = y
