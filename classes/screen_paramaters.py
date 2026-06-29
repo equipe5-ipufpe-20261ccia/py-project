@@ -1,8 +1,6 @@
-import pygame
-
 class ScreenParameters:
-    def __init__(self , screen_y , screen_x ):
+    def __init__(self, screen_x, screen_y):
         self.x = screen_x
         self.y = screen_y
     def get_screen_width(self):
-        return (self.x , self.y)
+        return (self.x, self.y)

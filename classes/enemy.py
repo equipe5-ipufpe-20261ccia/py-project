@@ -1,39 +1,53 @@
 import pygame
-from classes.player import Player
-from utils.collision import check_collision
+from utils.collision import check_collision, check_object_group_collision
 
+# pygame.sprite.Sprite because of practicity of killing and grouping enemies
+class Enemy(pygame.sprite.Sprite):
 
-class Enemy:
-    def __init__(self):
-        
-        self.image_enemy = pygame.image.load("assets/images/Enemy_1.jpg")
-        self.image_enemy = pygame.transform.scale(self.image_enemy , (100 , 100))
+    def __init__(self, image):
+        super().__init__()
+        self.health = 5
+        self.damage = 4
+        self.fire = False
 
-        self.rect = self.image_enemy.get_rect()
+        self.image = pygame.image.load(image)
+        self.image = pygame.transform.scale(self.image, (100, 100))
+
+        self.rect = self.image.get_rect()
         self.rect.x = 0
         self.rect.y = 0
         self.enemy_speed = 3
-    def update(self , player):
-        if check_collision(player, self)==False:
+
+    def IsBurning(self):
+        if self.fire:
+            self.health -= 3
+
+    # Centralizamos TODA a lógica de jogo no update
+    def update(self, player, bullets):
+        if not check_collision(player, self):
             vector_player = pygame.math.Vector2(player.rect.center)
             vector_enemy = pygame.math.Vector2(self.rect.center)
-
             direction_vector = vector_player - vector_enemy
 
-            distance = direction_vector.length()
+            if direction_vector.length() > 0:
+                vector_normalize = direction_vector.normalize()
+                self.rect.x += vector_normalize.x * self.enemy_speed
+                self.rect.y += vector_normalize.y * self.enemy_speed
 
-            vetor_normalize = direction_vector.normalize()
-
-            self.rect.x += vetor_normalize.x * self.enemy_speed
-            self.rect.y += vetor_normalize.y * self.enemy_speed
-
-    def get_position(self):
-        return (self.rect.x , self.rect.y)
-    def draw(self, screen, player):
-        if check_collision(player, self) == False:
-            screen.blit(self.image_enemy , self.rect)
-        else:
-            player.vida -= 1
-            print(f"diminuiram minha aura , aura atual {player.vida}")
+        if check_collision(player, self):
+            player.health -= self.damage
+            player.get_health()
+            print(f"Current health is: {player.health}")
             self.rect.x = 0
             self.rect.y = 0
+
+        elif check_object_group_collision(self, bullets)[0]:
+            while self.health > 0:
+                self.health -= check_object_group_collision(self, bullets)[1].damage
+                self.IsBurning()
+                print(f"{self.health}")
+            self.rect.x = 0
+            self.rect.y = 0
+
+    def get_position(self):
+        return (self.rect.x, self.rect.y)
