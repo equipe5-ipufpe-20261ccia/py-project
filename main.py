@@ -32,8 +32,6 @@ def main():
 
     bullets = pygame.sprite.Group()
     enemies = pygame.sprite.Group()
-    enemy = Enemy("assets/images/Enemy_1.jpg")
-    enemy.add(enemies)
     player = Player(bullets, screen)
     heart = Heart()
     potion = Potion()
@@ -55,8 +53,9 @@ def main():
         player.update(config_screen, current_time)
         bullets.update(enemies)
         enemies.update(player, bullets)
+        boss.update(current_time, player, bullets)
 
-        # Drawing on screen (and a few other things)
+        # Drawing on screen a(and a few other things)
 
         boss.draw(screen)
         player.draw(screen, current_time)
