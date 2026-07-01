@@ -73,9 +73,9 @@ def main():
 
         # Updating stats/position
 
-        player.update(config_screen, current_time, hearts, potions) 
+        player.update(config_screen, current_time, hearts, potions,screen) 
         
-        bullets.update(enemies)
+        bullets.update(enemies, current_time)
         enemies.update(player, bullets)
         boss.update(current_time, player, bullets)
 

@@ -48,18 +48,20 @@ class Boss(pygame.sprite.Sprite):
             self.current_frame = 0
         self.image = self.sprites[int(self.current_frame)]
 
-        # --- Movimento flutuando na tela caso queira retirar ---
         self.rect.x += self.boss_speed * self.direction
         if self.rect.right >= self.screen_width - 20: 
             self.direction = -1
         elif self.rect.left <= 20: 
             self.direction = 1
 
-        balas_que_bateram = pygame.sprite.spritecollide(self, bullets, True)
+        balas_que_bateram = pygame.sprite.spritecollide(self, bullets, False)
         
         for bala in balas_que_bateram:
-            self.vida -= bala.damage 
-            print(f"Boss tomou dano! Vida restante: {self.vida}")
+            if bala.state != "IMPACT":
+                self.vida -= bala.damage 
+                bala.state = "IMPACT" # Ativa o impacto na bala
+                bala.bullet_animation.frame = 6 # Pula para o frame 6
+                print(f"Boss tomou dano! Vida restante: {self.vida}")
 
         if self.vida <= 0:
             print("VITÓRIA! O Boss foi derrotado!")
