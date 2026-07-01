@@ -5,16 +5,12 @@ class HUD:
     def __init__(self, screen):
         self.screen = screen
         
-        # --- 1. CARREGAR FONTES ---
         self.font = pygame.font.SysFont(constants.FONT_STYLE, constants.FONT_SIZE)
         self.font_large = pygame.font.SysFont(constants.FONT_STYLE, constants.FONT_SIZE + 6)
         self.boss_font = pygame.font.SysFont(constants.FONT_STYLE, 30, bold=True)
 
-        # --- 2. CARREGAR E RECORTAR A SPRITESHEET DE VIDA (8 FRAMES) ---
-        # Corrigido para o arquivo correto e a divisão exata de 8 frames
         self.health_frames = self.load_spritesheet("assets/images/health_circle.png", num_frames=8)
         
-        # --- 3. CARREGAR IMAGENS DOS COLETÁVEIS ---
         self.heart_icon = pygame.image.load("assets/images/heart_sprite_valido.png").convert_alpha()
         self.heart_icon = pygame.transform.scale(self.heart_icon, (30, 30))
         
@@ -29,35 +25,24 @@ class HUD:
         frames = []
         for i in range(num_frames):
             frame = sheet.subsurface(pygame.Rect(i * frame_width, 0, frame_width, frame_height))
-            # Ajusta o tamanho de cada frame individual para 80x80 pixels
             frame = pygame.transform.scale(frame, (80, 80))
             frames.append(frame)
         return frames
 
     def draw(self, player, boss):
-        # ---------------------------------------------------------
-        # A. CÍRCULO DE VIDA DO PLAYER (Diminui conforme perde vida)
-        # ---------------------------------------------------------
         max_h = player.max_health if hasattr(player, 'max_health') else 80 
         percent_health = max(0, min(1, player.health / max_h))
         num_frames = len(self.health_frames)
         
-        # Cálculo do frame: se frame 0 é cheio e o último é vazio
         frame_index = int((1 - percent_health) * (num_frames - 1))
         frame_index = max(0, min(num_frames - 1, frame_index))
         
-        # Desenha apenas o frame correto do círculo atualizado
         self.screen.blit(self.health_frames[frame_index], (20, 20))
 
-        # ---------------------------------------------------------
-        # B. TEXTO DA VIDA (Ex: "48/80" ao lado do círculo)
-        # ---------------------------------------------------------
-        health_text = self.font.render(f"{player.health}/{max_h}", True, constants.WHITE)
+
+        health_text = self.font.render(f"Vida: {player.health}/{max_h}", True, constants.WHITE)
         self.screen.blit(health_text, (110, 45))
 
-        # ---------------------------------------------------------
-        # C. COLETÁVEIS (No canto superior direito)
-        # ---------------------------------------------------------
         heart_x = constants.SCREEN_X - 150
         self.screen.blit(self.heart_icon, (heart_x, 25))
         heart_text = self.font_large.render(f"x {player.collected_hearts}", True, constants.WHITE)
@@ -67,9 +52,7 @@ class HUD:
         potion_text = self.font_large.render(f"x {player.collected_potions}", True, constants.WHITE)
         self.screen.blit(potion_text, (heart_x + 40, 67))
 
-        # ---------------------------------------------------------
-        # D. VIDA DO BOSS (Centralizado na parte de baixo)
-        # ---------------------------------------------------------
+
         if boss.vida > 0:
             boss_text = self.boss_font.render(f"BOSS HP: {boss.vida}", True, (255, 0, 0))
             
