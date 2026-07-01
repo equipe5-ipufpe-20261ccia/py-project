@@ -16,6 +16,10 @@ class HUD:
         
         self.potion_icon = pygame.image.load("assets/images/green_potion_sprite.png").convert_alpha()
         self.potion_icon = pygame.transform.scale(self.potion_icon, (30, 30))
+        
+        self.coin_icon = pygame.image.load("assets/images/coin_test.png").convert_alpha()
+        self.coin_icon = pygame.transform.scale(self.coin_icon, (30, 30))
+        
 
     def load_spritesheet(self, filename, num_frames):
         sheet = pygame.image.load(filename).convert_alpha()
@@ -51,6 +55,11 @@ class HUD:
         self.screen.blit(self.potion_icon, (heart_x, 65))
         potion_text = self.font_large.render(f"x {player.collected_potions}", True, constants.WHITE)
         self.screen.blit(potion_text, (heart_x + 40, 67))
+        
+        coins_collected = player.collected_coins if hasattr(player, 'collected_coins') else 0
+        self.screen.blit(self.coin_icon, (heart_x, 105))
+        coin_text = self.font_large.render(f"x {coins_collected}", True, constants.WHITE)
+        self.screen.blit(coin_text, (heart_x + 40, 107))
 
 
         if boss.vida > 0:

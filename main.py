@@ -6,14 +6,13 @@ import constants
 from classes.screen_paramaters import ScreenParameters
 from classes.player import Player
 from classes.enemy import Enemy
-from classes.game_object import Heart, Potion
+from classes.game_object import ItemManager
 from classes.boss import Boss
 from classes.hud import HUD
 
 def main():
 
     # Initial setup
-
     pygame.init()
 
     pygame.mixer.init()
@@ -31,16 +30,11 @@ def main():
     clock = pygame.time.Clock()
 
     # Initializing all important objects
-
     bullets = pygame.sprite.Group()
     enemies = pygame.sprite.Group()
     player = Player(bullets, screen)
-    hearts = []  
-    potions = [] 
-
-    # Cria um alarme que apita a cada 5000 milissegundos (5 segundos)
-    SPAWN_ITEM_EVENT = pygame.USEREVENT + 1
-    pygame.time.set_timer(SPAWN_ITEM_EVENT, 5000)
+    
+    item_manager = ItemManager()
     
     boss = Boss(config_screen.get_screen_width()[0])
     hud = HUD(screen)
@@ -55,26 +49,10 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-                
-            # --- QUANDO O ALARME APITAR (a cada 5 segundos) ---
-            if event.type == SPAWN_ITEM_EVENT:
-                # 50% de chance de ser coração ou poção
-                if random.choice(["heart", "potion"]) == "heart":
-                    new_heart = Heart()
-                    # Define posição X e Y aleatória dentro dos limites da tela
-                    new_heart.rect.x = random.randint(50, screen.get_width() - 50)
-                    new_heart.rect.y = random.randint(50, screen.get_height() - 50)
-                    hearts.append(new_heart) 
-                else:
-                    new_potion = Potion()
-                    new_potion.rect.x = random.randint(50, screen.get_width() - 50)
-                    new_potion.rect.y = random.randint(50, screen.get_height() - 50)
-                    potions.append(new_potion) 
 
         # Updating stats/position
-
-        player.update(config_screen, current_time, hearts, potions,screen) 
-        
+        player.update(config_screen, current_time, screen)    
+        item_manager.update(current_time, screen.get_width(), screen.get_height(), player)
         bullets.update(enemies, current_time)
         enemies.update(player, bullets)
         boss.update(current_time, player, bullets)
@@ -82,12 +60,7 @@ def main():
         # Drawing on screen
         boss.draw(screen)
         player.draw(screen, current_time)
-        
-        for h in hearts:
-            h.draw(screen, player)
-        for p in potions:
-            p.draw(screen, player)
-            
+        item_manager.draw(screen)   
         enemies.draw(screen)
         bullets.draw(screen)
         hud.draw(player, boss)

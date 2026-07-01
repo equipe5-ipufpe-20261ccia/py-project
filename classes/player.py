@@ -15,6 +15,7 @@ class Player(pygame.sprite.Sprite):
         self.max_health = 80       
         self.collected_hearts = 0  
         self.collected_potions = 0 
+        self.collected_coins = 0
 
         # Direction positioned
 
@@ -164,7 +165,6 @@ class Player(pygame.sprite.Sprite):
             self.single_press = True
             
     def collect_items(self, hearts, potions):
-        # 1. Colisão com os Corações
         for heart in hearts[:]: 
             if self.rect.colliderect(heart.rect):
                 self.collected_hearts += 1
@@ -174,7 +174,7 @@ class Player(pygame.sprite.Sprite):
                 print(f"Apanhou um coração! Vida atual: {self.health}")
                 hearts.remove(heart) 
 
-        # 2. Colisão com as Poções
+
         for potion in potions[:]:
             if self.rect.colliderect(potion.rect):
                 self.collected_potions += 1
@@ -182,10 +182,9 @@ class Player(pygame.sprite.Sprite):
                 print(f"Apanhou uma poção! Energia atual: {self.energy}")
                 potions.remove(potion)
 
-    def update(self, screen_params, current_time, hearts, potions, screen):
-        self.movement(screen_params, current_time)
+    def update(self, config_screen, current_time, screen):
+        self.movement(config_screen, current_time)
         self.shooting(screen=screen)
-        self.collect_items(hearts, potions)
 
     def draw(self, screen, current_time):
         if self.moving_down:
@@ -213,4 +212,3 @@ class Player(pygame.sprite.Sprite):
             elif self.facing_down:
                 self.player_idle_down.update_and_draw(current_time,
                 cooldown=100, width=64, height=64, y=self.rect.y,x=self.rect.x , maximium=3, minimium=0)
-
