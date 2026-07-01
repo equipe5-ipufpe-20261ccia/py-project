@@ -149,8 +149,8 @@ class Player(pygame.sprite.Sprite):
             self.rect.left = 0
         if self.rect.right > screen_params.x:
             self.rect.right = screen_params.x
-        if self.rect.top < 0:
-            self.rect.top = 0
+        if self.rect.top < 300:
+            self.rect.top = 300
         if self.rect.bottom > screen_params.y:
             self.rect.bottom = screen_params.y
     # Creates a bullet when Space is pressed, only works one click at a time
@@ -164,23 +164,6 @@ class Player(pygame.sprite.Sprite):
         elif not key[pygame.K_SPACE]:
             self.single_press = True
             
-    def collect_items(self, hearts, potions):
-        for heart in hearts[:]: 
-            if self.rect.colliderect(heart.rect):
-                self.collected_hearts += 1
-                self.health += 20
-                if self.health > self.max_health:
-                    self.health = self.max_health 
-                print(f"Apanhou um coração! Vida atual: {self.health}")
-                hearts.remove(heart) 
-
-
-        for potion in potions[:]:
-            if self.rect.colliderect(potion.rect):
-                self.collected_potions += 1
-                self.energy += 1
-                print(f"Apanhou uma poção! Energia atual: {self.energy}")
-                potions.remove(potion)
 
     def update(self, config_screen, current_time, screen):
         self.movement(config_screen, current_time)

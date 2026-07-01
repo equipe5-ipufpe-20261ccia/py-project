@@ -11,7 +11,7 @@ class Collectable(pygame.sprite.Sprite):
         
         self.rect = self.image_collectable.get_rect()
         self.rect.x = random.randint(50, 750)
-        self.rect.y = random.randint(100, 500)
+        self.rect.y = random.randint(300, 500)
         
         self.spawn_time = pygame.time.get_ticks()  
         self.lifetime = 7000  
@@ -82,7 +82,7 @@ class ItemManager:
                 new_item = Battery() 
             
             new_item.rect.x = random.randint(50, screen_width - 50)
-            new_item.rect.y = random.randint(50, screen_height - 50)
+            new_item.rect.y = random.randint(300, screen_height - 50)
             self.items_list.append(new_item)
             self.last_spawn_time = current_time
 

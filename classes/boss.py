@@ -24,6 +24,13 @@ class Boss(pygame.sprite.Sprite):
         self.mini_spiders = pygame.sprite.Group()
         self.last_attack_time = 0
         self.attack_cooldown = 4000
+        
+        self.mini_spiders = pygame.sprite.Group()
+        self.last_attack_time = 0
+        self.attack_cooldown = 4000
+        
+        self.web_bg = pygame.image.load("assets/images/web_back.png").convert_alpha()
+        self.web_bg = pygame.transform.scale(self.web_bg, (self.screen_width, 250))
 
     def load_spritesheet(self, filename, num_frames=3):
         sheet = pygame.image.load(filename).convert_alpha()
@@ -89,6 +96,8 @@ class Boss(pygame.sprite.Sprite):
             self.mini_spiders.add(nova_aranha)
 
     def draw(self, screen):
+        screen.blit(self.web_bg, (0, 0))
+        
         if self.vida > 0:
             screen.blit(self.image, self.rect)
         self.mini_spiders.draw(screen)
