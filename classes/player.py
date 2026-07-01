@@ -11,6 +11,10 @@ class Player(pygame.sprite.Sprite):
         self.speed = 6
         self.energy = 0
         self.kill_count = 0
+        
+        self.max_health = 80       
+        self.collected_hearts = 0  
+        self.collected_potions = 0 
 
         # Direction positioned
 
@@ -160,10 +164,30 @@ class Player(pygame.sprite.Sprite):
             self.single_press = False
         elif not key[pygame.K_SPACE]:
             self.single_press = True
+            
+    def collect_items(self, hearts, potions):
+        # 1. Colisão com os Corações
+        for heart in hearts[:]: 
+            if self.rect.colliderect(heart.rect):
+                self.collected_hearts += 1
+                self.health += 20
+                if self.health > self.max_health:
+                    self.health = self.max_health 
+                print(f"Apanhou um coração! Vida atual: {self.health}")
+                hearts.remove(heart) 
 
-    def update(self, screen_params, current_time):
+        # 2. Colisão com as Poções
+        for potion in potions[:]:
+            if self.rect.colliderect(potion.rect):
+                self.collected_potions += 1
+                self.energy += 1
+                print(f"Apanhou uma poção! Energia atual: {self.energy}")
+                potions.remove(potion)
+
+    def update(self, screen_params, current_time, hearts, potions):
         self.movement(screen_params, current_time)
         self.shooting()
+        self.collect_items(hearts, potions)
 
     def draw(self, screen, current_time):
         if self.moving_down:
