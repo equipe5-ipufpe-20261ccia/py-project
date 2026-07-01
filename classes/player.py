@@ -34,39 +34,39 @@ class Player(pygame.sprite.Sprite):
         # Idle animation
 
         self.player_sprite_idle_up = pygame.image.load("assets/images/player_idle_up.png").convert_alpha()
-        self.player_idle_up = Animation(image=self.player_sprite_idle_up, screen=screen)
+        self.player_idle_up = Animation(image=self.player_sprite_idle_up, screen=screen , minimium=0)
         self.player_idle_up.animation_sheet(steps=3, width=32, height=32)
 
         self.player_sprite_idle_right = pygame.image.load("assets/images/player_idle_right.png").convert_alpha()
-        self.player_idle_right = Animation(image=self.player_sprite_idle_right, screen=screen)
+        self.player_idle_right = Animation(image=self.player_sprite_idle_right, screen=screen , minimium=0)
         self.player_idle_right.animation_sheet(steps=3, width=32, height=32)
 
         self.player_sprite_idle_left = pygame.image.load("assets/images/player_idle_left.png").convert_alpha()
-        self.player_idle_left = Animation(image=self.player_sprite_idle_left, screen=screen)
+        self.player_idle_left = Animation(image=self.player_sprite_idle_left, screen=screen , minimium=0)
         self.player_idle_left.animation_sheet(steps=3, width=32, height=32)
 
         self.player_sprite_idle_down = pygame.image.load("assets/images/player_idle_down.png").convert_alpha()
-        self.player_idle_down = Animation(image=self.player_sprite_idle_down, screen=screen)
+        self.player_idle_down = Animation(image=self.player_sprite_idle_down, screen=screen , minimium=0)
         self.player_idle_down.animation_sheet(steps=3, width=32, height=32)
 
         # Running animation assets/images/player_left_run_spritesheet.png"
 
         self.player_sprite_up = pygame.image.load("assets/images/player_up_run_spritesheet.png").convert_alpha()
-        self.player_up = Animation(image=self.player_sprite_up, screen=screen)
+        self.player_up = Animation(image=self.player_sprite_up, screen=screen, minimium=0)
         self.player_up.animation_sheet(steps=11, width=32, height=32)
 
         # Confused left and right sheets, fix the names later
 
         self.sprite_right = pygame.image.load("assets/images/player_left_run_spritesheet.png").convert_alpha()
-        self.player_right = Animation(image=self.sprite_right, screen=screen)
+        self.player_right = Animation(image=self.sprite_right, screen=screen,minimium=0)
         self.player_right.animation_sheet(steps=9, width=32, height=32)
 
         self.player_sprite_left = pygame.image.load("assets/images/player_right_run_spritesheet.png").convert_alpha()
-        self.player_left = Animation(image=self.player_sprite_left, screen=screen)
+        self.player_left = Animation(image=self.player_sprite_left, screen=screen,minimium=0)
         self.player_left.animation_sheet(steps=9, width=32, height=32)
 
         self.player_sprite_down = pygame.image.load("assets/images/player_down_run_spritesheet.png").convert_alpha()
-        self.player_down = Animation(image=self.player_sprite_down, screen=screen)
+        self.player_down = Animation(image=self.player_sprite_down, screen=screen,minimium=0)
         self.player_down.animation_sheet(steps=10, width=32, height=32)
 
         self.image_present = pygame.Surface((32, 32))
@@ -92,8 +92,6 @@ class Player(pygame.sprite.Sprite):
 
     def movement(self, screen_params, current_time):
 
-        # verifica se a tecla esta sendo pressionada
-        # O comando .get_pressed() , verifica se a tecla esta precionada
         key = pygame.key.get_pressed()
 
         mov_x = 0
@@ -155,10 +153,10 @@ class Player(pygame.sprite.Sprite):
         if self.rect.bottom > screen_params.y:
             self.rect.bottom = screen_params.y
     # Creates a bullet when Space is pressed, only works one click at a time
-    def shooting(self):
+    def shooting(self,screen):
         key = pygame.key.get_pressed()
         if key[pygame.K_SPACE] and self.single_press:
-            bulllet = Bullet(self.rect.centerx, self.rect.top)
+            bulllet = Bullet(self.rect.centerx, self.rect.top , screen=screen)
             self.bullets.add(bulllet)
             print("shot")
             self.single_press = False
@@ -184,35 +182,35 @@ class Player(pygame.sprite.Sprite):
                 print(f"Apanhou uma poção! Energia atual: {self.energy}")
                 potions.remove(potion)
 
-    def update(self, screen_params, current_time, hearts, potions):
+    def update(self, screen_params, current_time, hearts, potions, screen):
         self.movement(screen_params, current_time)
-        self.shooting()
+        self.shooting(screen=screen)
         self.collect_items(hearts, potions)
 
     def draw(self, screen, current_time):
         if self.moving_down:
             self.player_down.update_and_draw(current_time, cooldown=100, width=64, height=64, y=self.rect.y,
-                                             x=self.rect.x)
+                                             x=self.rect.x , maximium=10  , minimium=0)
         elif self.moving_up:
             self.player_up.update_and_draw(current_time, cooldown=100, width=64, height=64, y=self.rect.y,
-                                           x=self.rect.x)
+                                           x=self.rect.x , maximium= 11 , minimium=0)
         elif self.moving_left:
             self.player_left.update_and_draw(current_time, cooldown=100, width=64, height=64, y=self.rect.y,
-                                             x=self.rect.x)
+                                             x=self.rect.x , maximium=9 , minimium=0)
         elif self.moving_right:
             self.player_right.update_and_draw(current_time, cooldown=100, width=64, height=64, y=self.rect.y,
-                                              x=self.rect.x)
+                                              x=self.rect.x , maximium=9 , minimium=0)
         else:
             if self.facing_up:
                 self.player_idle_up.update_and_draw(current_time,
-                cooldown=100, width=64, height=64, y=self.rect.y,x=self.rect.x)
+                cooldown=100, width=64, height=64, y=self.rect.y,x=self.rect.x , maximium=3 , minimium=0)
             elif self.facing_right:
                 self.player_idle_right.update_and_draw(current_time,
-                cooldown=100, width=64, height=64, y=self.rect.y,x=self.rect.x)
+                cooldown=100, width=64, height=64, y=self.rect.y,x=self.rect.x , maximium=3 , minimium=0)
             elif self.facing_left:
                 self.player_idle_left.update_and_draw(current_time,
-                cooldown=100, width=64, height=64, y=self.rect.y,x=self.rect.x)
+                cooldown=100, width=64, height=64, y=self.rect.y,x=self.rect.x , maximium=3 , minimium=0)
             elif self.facing_down:
                 self.player_idle_down.update_and_draw(current_time,
-                cooldown=100, width=64, height=64, y=self.rect.y,x=self.rect.x)
+                cooldown=100, width=64, height=64, y=self.rect.y,x=self.rect.x , maximium=3, minimium=0)
 
