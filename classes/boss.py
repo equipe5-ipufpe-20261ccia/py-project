@@ -15,7 +15,7 @@ class Boss(pygame.sprite.Sprite):
         self.rect.centerx = screen_width // 2
         self.rect.top = 20
 
-        self.vida = 300
+        self.vida = 800
         
         self.screen_width = screen_width
         self.direction = 1 
