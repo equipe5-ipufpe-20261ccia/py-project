@@ -44,9 +44,6 @@ class HUD:
         self.screen.blit(self.health_frames[frame_index], (20, 20))
 
 
-        health_text = self.font.render(f"Vida: {player.health}/{max_h}", True, constants.WHITE)
-        self.screen.blit(health_text, (110, 45))
-
         heart_x = constants.SCREEN_X - 150
         self.screen.blit(self.heart_icon, (heart_x, 25))
         heart_text = self.font_large.render(f"x {player.collected_hearts}", True, constants.WHITE)

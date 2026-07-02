@@ -32,7 +32,7 @@ class Player(pygame.sprite.Sprite):
         self.moving_down = False
         
         self.shoot_sound = pygame.mixer.Sound("assets/music/bubble_shot_sound_effect.wav")
-        self.shoot_sound.set_volume(0.2)
+        self.shoot_sound.set_volume(0.1)
         
         self.damage_sound = pygame.mixer.Sound("assets/music/player_damage_sound_effect.wav")
         self.damage_sound.set_volume(0.1) 
