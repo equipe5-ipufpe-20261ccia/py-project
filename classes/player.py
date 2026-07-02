@@ -30,7 +30,12 @@ class Player(pygame.sprite.Sprite):
         self.moving_right = False
         self.moving_left = False
         self.moving_down = False
-
+        
+        self.shoot_sound = pygame.mixer.Sound("assets/music/bubble_shot_sound_effect.wav")
+        self.shoot_sound.set_volume(0.2)
+        
+        self.damage_sound = pygame.mixer.Sound("assets/music/player_damage_sound_effect.wav")
+        self.damage_sound.set_volume(0.1) 
 
         # Idle animation
 
@@ -159,6 +164,7 @@ class Player(pygame.sprite.Sprite):
         if key[pygame.K_SPACE] and self.single_press:
             bulllet = Bullet(self.rect.centerx, self.rect.top , screen=screen)
             self.bullets.add(bulllet)
+            self.shoot_sound.play()
             print("shot")
             self.single_press = False
         elif not key[pygame.K_SPACE]:

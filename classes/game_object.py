@@ -70,6 +70,9 @@ class ItemManager:
         self.items_list = []
         self.last_spawn_time = 0
         self.spawn_cooldown = 5000  
+        self.collect_sound = pygame.mixer.Sound("assets/music/item_collect_sound_effect.flac")
+        self.collect_sound.set_volume(0.2)
+        self.heart_sound = pygame.mixer.Sound("assets/music/heart_collect_sound_effect.wav")
 
     def update(self, current_time, screen_width, screen_height, player):
         if current_time - self.last_spawn_time > self.spawn_cooldown:
@@ -88,6 +91,10 @@ class ItemManager:
 
         for item in self.items_list[:]:
             if player.rect.colliderect(item.rect):
+                if type(item).__name__ == "Heart":
+                    self.heart_sound.play()
+                else:
+                    self.collect_sound.play()
                 item.effect(player)
                 self.items_list.remove(item)
 

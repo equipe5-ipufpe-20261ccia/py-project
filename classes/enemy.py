@@ -119,5 +119,6 @@ class MiniSpider(pygame.sprite.Sprite):
         if self.rect.colliderect(player.rect):
             player.health -= 2
             player.get_health()
+            player.damage_sound.play()
             print(f"Current health is: {player.health}")
             self.kill()

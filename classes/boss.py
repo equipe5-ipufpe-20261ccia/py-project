@@ -31,6 +31,8 @@ class Boss(pygame.sprite.Sprite):
         
         self.web_bg = pygame.image.load("assets/images/web_back.png").convert_alpha()
         self.web_bg = pygame.transform.scale(self.web_bg, (self.screen_width, 250))
+        
+        self.damage_sound = pygame.mixer.Sound("assets/music/boss_damage_sound_effect.wav")
 
     def load_spritesheet(self, filename, num_frames=3):
         sheet = pygame.image.load(filename).convert_alpha()
@@ -66,8 +68,9 @@ class Boss(pygame.sprite.Sprite):
         for bala in balas_que_bateram:
             if bala.state != "IMPACT":
                 self.vida -= bala.damage 
-                bala.state = "IMPACT" # Ativa o impacto na bala
-                bala.bullet_animation.frame = 6 # Pula para o frame 6
+                self.damage_sound.play()
+                bala.state = "IMPACT" 
+                bala.bullet_animation.frame = 6 
                 print(f"Boss tomou dano! Vida restante: {self.vida}")
 
         if self.vida <= 0:
