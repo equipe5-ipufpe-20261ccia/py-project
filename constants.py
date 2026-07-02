@@ -11,3 +11,5 @@ SCREEN_Y = 800
 
 FONT_STYLE = "Arial"
 FONT_SIZE = 20
+
+VOLUME = 0.2
