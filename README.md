@@ -1,4 +1,3 @@
-
 # DreamHell
 ## Contexto
 Um projeto final para a disciplina de Introdução à Programação na UFPE. Nessa cadeira, aprendemos conceitos básicos de lógica de programação usando Python e, posteriormente, formamos grupos que aplicam esses conhecimentos na construção de um jogo orientado a objetos.
@@ -38,13 +37,13 @@ py-project/
 └── constants.py                 # Define algumas constantes com cores, fontes etc.
 ```
 ## Ferramentas utilizadas
- - Git e GitHub, recursos padrão para a organização de código escrito por múltiplas pessoas;
- - Python 3.13, a linguagem de programação obrigatória para todo o código na disciplina de IP;
- - Pygame 2.6.1, uma biblioteca de Python que traz recursos essenciais para o desenvolvimento de jogos;
- - VS Code e PyCharm para edição de código;
- - StackEdit para edição de Markdown;
- - LMMS para a criação de música e efeitos sonoros originais;
- - Aseprite para a criação de sprites.
+ - **Git** e **GitHub**, recursos padrão para a organização de código escrito por múltiplas pessoas;
+ - **Python** 3.13, a linguagem de programação obrigatória para todo o código na disciplina de IP;
+ - **Pygame** 2.6.1, uma biblioteca de Python que traz recursos essenciais para o desenvolvimento de jogos;
+ - **VS Code** e **PyCharm** para edição de código;
+ - **StackEdit** para edição de Markdown;
+ - **LMMS** para a criação de música e efeitos sonoros originais;
+ - **Aseprite** para a criação de sprites.
 ## Divisão de tarefas
  - Todos os membros: geração de ideias;
  - Erick: base do código, movimentação dos personagens, elaboração das artes (sprites, efeitos sonoros e músicas);
@@ -61,6 +60,13 @@ py-project/
  - **Classes** e **métodos** foram usadas para criar objetos que caracterizam os coletáveis, os personagens e as balas; também foram usadas como utilitários para animações e apresentação do jogo.
  - **Polimorfismo** e **herança** foram usados várias vezes para as subclasses, principalmente nos coletáveis.
  - **Abstração** foi utilizada para facilitar a compreensão de todo o código.
+ ## Desafios, erros e lições aprendidas
+ ### Qual foi o maior erro cometido durante o projeto? Como vocês lidaram com ele?
+ O principal erro foi a falta de organização e de uma gestão de tempo mais eficiente. Apesar de haver uma divisão de tarefas, nem sempre ela foi seguida corretamente, o que prejudicou o andamento do trabalho. Em vários momentos, acabamos tentando “acelerar” o projeto de forma desorganizada, chegando a virar noites para conseguir finalizar as atividades. Para lidar com isso, realizamos reuniões em grupo para concentrar a produção e conseguir concluir o que estava pendente.
+### Qual foi o maior desafio enfrentado durante o projeto? Como vocês lidaram com ele?
+A dificuldade em utilizar as plataformas necessárias para a realização do projeto, o que gerou atrasos em algumas etapas e exigiu tempo adicional de adaptação e aprendizado.
+### Quais as lições aprendidas durante o projeto?
+Como lições aprendidas, destacamos a importância de seguir o planejamento estabelecido, respeitar a divisão de tarefas e manter uma gestão de tempo mais consistente. Também aprendemos que a organização ao longo do processo é essencial para evitar sobrecarga no final e que o uso adequado das ferramentas desde o início pode facilitar significativamente o desenvolvimento do trabalho.
 ## Como executar o jogo
 ### Informações importantes
  - Os pré-requisitos são um computador com acesso ao GitHub na instalação e Python 3.13 (o jogo provavelmente funciona em outras versões do Python, mas ele não foi testado nelas).
